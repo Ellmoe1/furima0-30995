@@ -19,22 +19,21 @@
 
 ## itemsテーブル
 
-| Column       | Type       | Options                         |
-| --------     | ------     | ------------------------------- |
-| name         | string     | null: false                     |
-| text         | text       | null: false                     |
-| category     | integer    | null: false                     |
-| status       | integer    | null: false                     |
-| paymentmethod| integer    | null: false                     |
-| prefecture   | integer    | null: false                     |
-| delivery     | integer    | null: false                     |
-| price        | integer    | null: false                     |
-| user         | references | null: false , foreign_key: true |
+| Column          | Type       | Options                         |
+| --------        | ------     | ------------------------------- |
+| name            | string     | null: false                     |
+| text            | text       | null: false                     |
+| category_id     | integer    | null: false                     |
+| status_id       | integer    | null: false                     |
+| paymentmethod_id| integer    | null: false                     |
+| prefecture_id   | integer    | null: false                     |
+| delivery_id     | integer    | null: false                     |
+| price           | integer    | null: false                     |
+| user            | references | null: false , foreign_key: true |
 
 ### Association
 
 - belongs_to :user
-- has_one  :order
 - has_one :purchase
 
 ## ordersテーブル
@@ -42,16 +41,17 @@
 | Column       | Type       | Options                         |
 | --------     | ------     | ------------------------------- |
 | postalcode   | string     | null: false ,default: ""        |
-| prefecture   | integer    | null: false ,default: ""        |
+| prefecture_id| integer    | null: false ,default: ""        |
 | city         | string     | null: false ,default: ""        |
 | address      | string     | null: false ,default: ""        |
 | building     | string     | default: ""                     |
 | phoneno      | string     | null: false ,default: ""        |
+| item         | references | null: false , foreign_key: true | 
+| user         | references | null: false , foreign_key: true |
+
 
 ### Association
-
-- has_many :items
-- belongs_to :user
+- has_one :purchase
 
 ### purchasesテーブル
 
@@ -59,9 +59,9 @@
 | --------     | ------     | ------------------------------- |
 | item         | references | null: false , foreign_key: true | 
 | user         | references | null: false , foreign_key: true |
-| address      | string     | null: false , default: ""       |
 
 ### Association
 
 - belongs_to :item
 - belongs_to :user
+- has_one :address
