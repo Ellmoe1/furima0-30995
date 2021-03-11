@@ -1,24 +1,59 @@
-# README
+＃テーブル設計
+## users テーブル
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+| Column             |  Type    |  Options                  |
+| --------           |  ------  |  -----------              |
+| nickname           |  string  |  null: false ,default: "" |
+| email              |  string  |  null: false ,default: "" |
+| encrypted_password |  string  |  null: false ,default: "" |
+| lastname           |  string  |  null: false ,default: "" |
+| firstname          |  string  |  null: false ,default: "" |
+| lastnamekana       |  string  |  null: false ,default: "" |
+| firstnamekana      |  string  |  null: false ,default: "" |
+| birthdate          |  date    |  null: false              |
 
-Things you may want to cover:
+### Association
 
-* Ruby version
+- has_many: items
+- has_many: orders
 
-* System dependencies
+## itemsテーブル
 
-* Configuration
+| Column       | Type       | Options                         |
+| --------     | ------     | ------------------------------- |
+| name         | string     | null: false                     |
+| text         | string     | null: false                     |
+| category     | string     | null: false                     |
+| status       | string     | null: false                     |
+| paymentmethod| string     | null: false                     |
+| prefecture   | string     | null: false                     |
+| delivery     | string     | null: false                     |
+| price        | integer    | null: false                     |
+| user         | references | null: false , foreign_key: true |
 
-* Database creation
+### Association
 
-* Database initialization
+- belongs_to: user
+- has_one: order
 
-* How to run the test suite
+## ordersテーブル
 
-* Services (job queues, cache servers, search engines, etc.)
+| Column       | Type       | Options                         |
+| --------     | ------     | ------------------------------- |
+| cardno       | string     | null: false ,default: ""        |
+| expmonth     | string     | null: false ,default: ""        |
+| expyear      | string     | null: false ,default: ""        |
+| cardcvc      | string     | null: false ,default: ""        |
+| postalcode   | string     | null: false ,default: ""        |
+| prefecture   | string     | null: false ,default: ""        |
+| city         | string     | null: false ,default: ""        |
+| address      | string     | null: false ,default: ""        |
+| building     | string     | null: false ,default: ""        |
+| phoneno      | string     | null: false ,default: ""        |
+| item         | references | null: false , foreign_key: true | 
+| user         | references | null: false , foreign_key: true |
 
-* Deployment instructions
+### Association
 
-* ...
+- has_many :items
+- belongs_to :user
