@@ -13,7 +13,7 @@ class User < ApplicationRecord
       PASSWORD_REGEX = /\A(?=.*?[a-z])(?=.*?[\d])[a-z\d]+\z/i.freeze
       validates :password,   length: { minimum: 6 }, format: {with:PASSWORD_REGEX, message: 'には英字と数字の両方を含めて設定してください'} # 半角英数字
       # ユーザー本名全角の正規表現
-      with_options format: { with: /\A[ぁ-んァ-ン一-龥]/ } do
+      with_options format: { with:/\A[ぁ-んァ-ヶ一-龥々]+\z/ } do
         validates :lastname
         validates :firstname
       end 
