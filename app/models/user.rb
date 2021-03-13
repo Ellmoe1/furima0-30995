@@ -10,11 +10,18 @@ class User < ApplicationRecord
   with_options presence: true do
       validates :nickname
       validates :email
-      validates :password,      length: { minimum: 6 }, format: { with: /\A[a-z0-9]+\z/i } # 半角英数字
-      validates :lastname,      format: { with: /\A[ぁ-んァ-ン一-龥]/ } # ユーザー本名全角の正規表現
-      validates :firstname,     format: { with: /\A[ぁ-んァ-ン一-龥]/ } # ユーザー本名全角の正規表現
-      validates :lastnamekana,  format: { with: /\A[ァ-ヶー－]+\z/ } # フリガナ全角の正規表現
-      validates :firstnamekana, format: { with: /\A[ァ-ヶー－]+\z/ } # フリガナ全角の正規表現
+      PASSWORD_REGEX = /\A(?=.*?[a-z])(?=.*?[\d])[a-z\d]+\z/i.freeze
+      validates :password,   length: { minimum: 6 }, format: {with:PASSWORD_REGEX, message: 'には英字と数字の両方を含めて設定してください'} # 半角英数字
+      # ユーザー本名全角の正規表現
+      with_options format: { with: /\A[ぁ-んァ-ン一-龥]/ } do
+        validates :lastname
+        validates :firstname
+      end 
+    # フリガナ全角の正規表現
+    with_options format: { with:/\A[ァ-ヶー－]+\z/ } do
+      validates :lastnamekana
+      validates :firstnamekana
+    end 
       validates :birthdate
   end
 end

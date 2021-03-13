@@ -10,8 +10,8 @@ describe User do
         expect(@user).to be_valid
       end
       it 'passwordが6文字以上であれば登録できる' do
-        @user.password = '000000'
-        @user.password_confirmation = '000000'
+        @user.password = 'A3bjkD'
+        @user.password_confirmation = 'A3bjkD'
         expect(@user).to be_valid
       end
     end
@@ -27,6 +27,11 @@ describe User do
         @user.email = ''
         @user.valid?
         expect(@user.errors.full_messages).to include("Email can't be blank")
+      end
+      it 'emailに@が含まれていないと登録できないこと' do
+        @user.email = 'hogehoge.com'
+        @user.valid?
+        expect(@user.errors.full_messages).to include("Email is invalid")
       end
 
       it '重複したemailが存在する場合登録できない' do
@@ -44,8 +49,8 @@ describe User do
       end
 
       it 'passwordが5文字以下であれば登録できない' do
-        @user.password = '00000'
-        @user.password_confirmation = '00000'
+        @user.password = 'A3bbk'
+        @user.password_confirmation = 'A3bbk'
         @user.valid?
         expect(@user.errors.full_messages).to include('Password is too short (minimum is 6 characters)')
       end
@@ -57,7 +62,25 @@ describe User do
       end
 
       it 'password:半角英数混合(半角英語のみ)' do
-        @user.password = 'aaaaaaa'
+        @user.password = 'Lq3Mg6K66'
+        @user.valid?
+        expect(@user.errors.full_messages).to include("Password confirmation doesn't match Password")
+      end
+
+      it 'passwordが半角英字だけでは登録できないこと' do
+        @user.password = 'abceefg'
+        @user.valid?
+        expect(@user.errors.full_messages).to include("Password confirmation doesn't match Password")
+      end
+
+      it 'passwordが半角数字だけでは登録できないこと' do
+        @user.password = '1234567'
+        @user.valid?
+        expect(@user.errors.full_messages).to include("Password confirmation doesn't match Password")
+      end
+
+      it 'passwordが全角だと登録できないこと' do
+        @user.password = 'AABB123'
         @user.valid?
         expect(@user.errors.full_messages).to include("Password confirmation doesn't match Password")
       end
