@@ -10,9 +10,25 @@ class Item < ApplicationRecord
  #has_one :purchase
   has_one_attached :image
 
-  validates :category_id, numericality: { other_than: 1 }
-  validates :status_id, numericality: { other_than: 1 }
-  validates :paymentmethod_id, numericality: { other_than: 1 }
-  validates :prefecture_id, numericality: { other_than: 1 }
-  validates :delivery_id, numericality: { other_than: 1 }
+  with_options numericality: { other_than: 1 } do
+    validates :category_id
+    validates :status_id
+    validates :paymentmethod_id
+    validates :prefecture_id
+    validates :delivery_id
+  end
+
+  with_options presence: true do
+    validates :image
+    validates :name
+    validates :text
+    validates :category_id
+    validates :status_id
+    validates :paymentmethod_id
+    validates :prefecture_id
+    validates :delivery_id
+    validates :price,     numericality: {greater_than_or_equal_to: 300, less_than_or_equal_to: 9999999 }
+    validates :user_id
+  end
+  
 end
