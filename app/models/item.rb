@@ -7,7 +7,7 @@ class Item < ApplicationRecord
   belongs_to :delivery
 
   belongs_to :user
- #has_one :purchase
+  # has_one :purchase
   has_one_attached :image
 
   with_options numericality: { other_than: 0 } do
@@ -22,8 +22,6 @@ class Item < ApplicationRecord
     validates :image
     validates :name
     validates :text
-    validates :price,     numericality: {greater_than_or_equal_to: 300, less_than_or_equal_to: 9999999 }
-
+    validates :price, numericality: { greater_than_or_equal_to: 300, less_than_or_equal_to: 9_999_999 }
   end
-
 end
