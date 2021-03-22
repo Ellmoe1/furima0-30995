@@ -1,15 +1,13 @@
 class OrdersController < ApplicationController
   before_action :authenticate_user!,only: [:index,:create]
   before_action :move_to_toppage
-
+  before_action :set_item,only: [:index,:create]
 
   def index
-    @item = Item.find(params[:item_id])
     @item_purchase = ItemPurchase.new
   end
 
   def create
-    @item = Item.find(params[:item_id])
     @item_purchase = ItemPurchase.new(purchase_params)
     if @item_purchase.valid?
        pay_item
@@ -39,6 +37,10 @@ class OrdersController < ApplicationController
   def move_to_toppage
     @item = Item.find(params[:item_id])
     redirect_to root_path if (current_user.id == @item.user_id || @item.purchase.present?)
+  end
+
+  def set_item
+    @item = Item.find(params[:item_id])
   end
 
 end

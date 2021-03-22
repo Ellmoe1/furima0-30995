@@ -12,7 +12,6 @@ const formResult = document.getElementById("charge-form");
       exp_month: formData.get("item_purchase[expmonth]"),
       exp_year: `20${formData.get("item_purchase[expyear]")}`,
     };
-    console.log(card);
 
     Payjp.createToken(card, (status, response) => {
       if (status == 200) {

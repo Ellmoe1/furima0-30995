@@ -6,13 +6,11 @@ class ItemPurchase
     validates :prefecture_id, numericality: { other_than: 0, message: "can't be blank" }
     validates :city
     validates :address
-    validates :phoneno,  format: {with: /\A\d{11}\z/}
+    validates :phoneno,  format: {with: /\A\d{10,11}\z/}
     validates :item_id
     validates :user_id
     validates :token
   end
-    validates :building, presence: false
-
 
   def save
     purchase = Purchase.create(item_id: item_id,user_id: user_id)
