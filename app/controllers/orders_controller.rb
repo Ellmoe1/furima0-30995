@@ -1,5 +1,7 @@
 class OrdersController < ApplicationController
   before_action :authenticate_user!,only: [:index,:create]
+  before_action :move_to_toppage
+
 
   def index
     @item = Item.find(params[:item_id])
@@ -32,6 +34,11 @@ class OrdersController < ApplicationController
       card: purchase_params[:token],    # カードトークン
       currency: 'jpy'                 # 通貨の種類（日本円）
     )
+  end
+
+  def move_to_toppage
+    @item = Item.find(params[:item_id])
+    redirect_to root_path if (current_user.id == @item.user_id || @item.purchase.present?)
   end
 
 end
