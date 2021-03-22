@@ -7,7 +7,7 @@ class Item < ApplicationRecord
   belongs_to :delivery
 
   belongs_to :user
-  # has_one :purchase
+  has_one :purchase
   has_one_attached :image
 
   with_options numericality: { other_than: 0 } do
