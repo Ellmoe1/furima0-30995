@@ -2,6 +2,7 @@ require 'rails_helper'
 RSpec.describe ItemPurchase, type: :model do
     before do
       @item_purchase = FactoryBot.build(:item_purchase)
+      sleep 0.5
     end
     describe '商品購入機能' do
 
