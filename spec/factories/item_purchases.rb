@@ -6,8 +6,6 @@ FactoryBot.define do
     address        {'向陽台1-1-15'}
     building       {''}
     phoneno        {'08055552121'}
-    item_id        {FactoryBot.create(:item).id }
-    user_id        {FactoryBot.create(:user).id}
     token          {"tok_abcdefghijk00000000000000000"}
 
   end
